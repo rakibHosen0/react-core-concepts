@@ -1,7 +1,9 @@
 import logo from "./logo.svg";
 import "./App.css";
+import { useState } from "react";
 
 function App() {
+  //products array
   const products = [
     { name: "Photoshopa", price: "$90" },
     { name: "PDF Reder", price: "$6.99" },
@@ -37,9 +39,38 @@ function App() {
       </div>
     );
   }
+
+  function Counter() {
+    const [count, setCount] = useState(1);
+    const increaseOne = () => {
+      if (count < 10) {
+        setCount(count + 1);
+      } else {
+        //if count ===10 then count start from zero
+        setCount(0);
+      }
+    };
+    return (
+      <dir>
+        <h1>Count : {count}</h1>
+        <button onMouseOver={increaseOne}>Increase</button>
+        <button
+          onClick={() => {
+            if (count > 0) {
+              setCount(count - 1);
+            }
+          }}
+        >
+          Decrease
+        </button>
+      </dir>
+    );
+  }
+
   return (
     <div className="App">
       <header className="App-header">
+        <Counter></Counter>
         {products.map((prod) => (
           <Product product={prod}></Product>
         ))}
