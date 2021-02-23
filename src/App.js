@@ -1,8 +1,38 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
+  function Users() {
+    const [users, setUser] = useState([]);
+    useEffect(() => {
+      fetch("https://jsonplaceholder.typicode.com/users")
+        .then((res) => res.json())
+        .then((data) => setUser(data));
+    });
+    const userStyle = {
+      backgroundColor: "tomato",
+      color: "black",
+      border: "2px solid yellow",
+      width: "300px",
+      listStyle: "none",
+      margin: "0.5rem",
+    };
+    return (
+      <div>
+        <h3>Dynamic Users :{users.length}</h3>
+        <ul>
+          {users.map((user) => (
+            <div style={userStyle}>
+              <li>Name :{user.name}</li>
+              <li>Email :{user.email}</li>
+              <li>Email :{user.phone}</li>
+            </div>
+          ))}
+        </ul>
+      </div>
+    );
+  }
   //products array
   const products = [
     { name: "Photoshopa", price: "$90" },
@@ -71,6 +101,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Counter></Counter>
+        <Users></Users>
         {products.map((prod) => (
           <Product product={prod}></Product>
         ))}
